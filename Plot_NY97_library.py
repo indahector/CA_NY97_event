@@ -237,7 +237,7 @@ for i in range(img.size[1]):
 
 rgb_colours = np.array(rgb_colours)[::-1,:4]
 rgb_colours = smooth_cmap(rgb_colours, s=3, method="smooth")
-bwr_cmap = mpl.colors.ListedColormap(rgb_colours, name="alan_bwr")
+bwr_cmap = mpl.colors.ListedColormap(rgb_colours, name="bw_bwr")
 
 #----------------------------------------------------------------------------------------------------------
 def sigma_to_pressure(ds, var=None):
@@ -440,7 +440,7 @@ def plot_profile(Along, Across, Resolutions, time=None, max=False, fs=10):
     lw = 0.25
     #===========================================================================================================================
     #Along
-    xlabels = [r"u [m/s] (S-N)", r"v [m/s]", r"u [m/s]", r"v [m/s] (S-N)"]
+    xlabels = [r"C-D wind [m/s]", r"A-B wind [m/s]", r"u [m/s]", r"v [m/s] (S-N)"]
     ax = axs[0]
     for i in range(4):
         # test = np.abs(Along[i].U.sel(lev=950))
@@ -675,7 +675,7 @@ def plot_transect_inFig(along, across, J, fig, res=None, time=0, lev=950, fs=10,
     cs = ax.contour(across.lon, across.lev, -across.U, levels=u_levs0, colors="black", linewidths=0.8)
     cl = ax.clabel(cs,inline=1, fontsize=fs)
     cb = fig.colorbar(cf, ax=ax)
-    cb.set_label(r"v [m/s] (S-N)", fontsize=fs)
+    cb.set_label(r"C-D wind [m/s]", fontsize=fs)
     cb.ax.tick_params(labelsize=fs)
     ax.plot(np.ones_like(across.lev)*xc+360, across.lev, color="white", linestyle=":", alpha=0.75, zorder=99)
     ax.plot(across.lon, np.ones_like(across.lon)*950, color="white", linestyle=":", alpha=0.75, zorder=99)
@@ -689,7 +689,7 @@ def plot_transect_inFig(along, across, J, fig, res=None, time=0, lev=950, fs=10,
     cs = ax.contour(along.lat, along.lev, along.V, levels=v_levs1, colors="black", linewidths=0.8)
     cl = ax.clabel(cs, inline=1, fontsize=fs)
     cb = fig.colorbar(cf, ax=ax)
-    cb.set_label(r"u [m/s] (S-N)", fontsize=fs)
+    cb.set_label(r"A-B wind [m/s]", fontsize=fs)
     cb.ax.tick_params(labelsize=fs)
     ax.plot(np.ones_like(along.lev)*yc, along.lev, color="white", linestyle=":", alpha=0.75, zorder=99)
     ax.plot(along.lat, np.ones_like(along.lat)*950, color="white", linestyle=":", alpha=0.75, zorder=99)
@@ -777,7 +777,7 @@ def plot_along_across_transect(ERA5_p, E3SM_p, time=0, fs=10, figsize=(14,9)):
         ax.set_xlabel("")
         ax.set_xticklabels([])
         
-    for ax in (axs0[0], axs1[0], axs2[0], ):
+    for ax in (axs0[0], axs1[0], axs2[0], axs3[0],):
         ax.set_title("A", fontweight="bold", fontsize=fs, loc="left", y=0.975)
         ax.set_title("B", fontweight="bold", fontsize=fs, loc="right", y=0.975)
         ax.set_xlabel("")
@@ -785,7 +785,7 @@ def plot_along_across_transect(ERA5_p, E3SM_p, time=0, fs=10, figsize=(14,9)):
     lon_formatter = LongitudeFormatter(degree_symbol=" ")
     ax.xaxis.set_major_formatter(lon_formatter)
         
-    for ax in (axs0[1], axs1[1], axs2[1]): 
+    for ax in (axs0[1], axs1[1], axs2[1], axs3[1]): 
         ax.set_xlabel("")
         ax.set_title("C", fontweight="bold", fontsize=fs, loc="left", y=0.975)
         ax.set_title("D", fontweight="bold", fontsize=fs, loc="right", y=0.975)
